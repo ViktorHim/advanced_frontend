@@ -1,33 +1,22 @@
 import path from 'path';// Подключение модулей
 import webpack from 'webpack';
-import HtmlWebpackPlugin  from 'html-webpack-plugin';
+import { buildWebpackConfig } from './config/build/buildWebpackConfig';
+import { BuildPaths } from './config/build/types/config';
 
-const config : webpack.Configuration = {
-  mode: "development", // режим разработки
-  entry: path.resolve(__dirname, 'src', 'index.ts'), // Входная точка
-  output: {
-    path: path.resolve(__dirname, 'build'), // Выходная точка
-    filename: '[name].[contenthash].js',
-    clean: true
-  },
-  plugins: [ //массив плагинов
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'public', 'index.html')
-    }),
-    new webpack.ProgressPlugin()
-  ],
-  module: {
-    rules: [//Лоадеры
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],// Файлы для которых не надо указывать расширения для подключения (файлы с исходным кодом)
-  },
-};
+
+const paths: BuildPaths = {
+    entry: path.resolve(__dirname, 'src', 'index.ts'),
+    build: path.resolve(__dirname, 'build'),
+    html: path.resolve(__dirname, 'public', 'index.html')
+}
+
+const mode = 'development';
+const isDev = mode === 'development';
+
+const config : webpack.Configuration = buildWebpackConfig({
+  mode,
+  paths,
+  isDev
+});
 
 export default config;
