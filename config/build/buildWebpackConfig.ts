@@ -3,9 +3,10 @@ import { BuildOptions, BuildPaths } from "./types/config";
 import { buildPlugins } from "./buildPlugins";
 import { buildLoaders } from "./buildLoaders";
 import { buildResolves } from "./buildResolves";
+import { buildDevServer } from "./buildDevServer";
 
 export function buildWebpackConfig(options: BuildOptions) : webpack.Configuration {
-    const {mode, paths} = options;
+    const {mode, paths, isDev} = options;
     return {
         mode, // режим разработки
         entry: paths.entry, // Входная точка
@@ -19,5 +20,8 @@ export function buildWebpackConfig(options: BuildOptions) : webpack.Configuratio
           rules: buildLoaders(),
         },
         resolve: buildResolves(),
+        devtool: isDev ? 'inline-source-map' : undefined,
+        devServer: isDev ? buildDevServer(options) : undefined,
+
     }
 }

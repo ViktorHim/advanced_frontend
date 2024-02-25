@@ -1,13 +1,19 @@
-export type BuildMode = 'production' | 'development';
+export type BuildMode = 'production' | 'development'; //Тип сборки
 
-export interface BuildPaths {
+export interface BuildPaths { // интерфейс для путей
     entry: string;
     build: string;
     html: string;
 }
 
-export interface BuildOptions {
+export interface BuildEnv {
+    mode: BuildMode,
+    port: number
+}
+
+export interface BuildOptions {// интерфейс для настроек сборки
     mode: BuildMode;
     paths: BuildPaths;
     isDev: boolean;
+    port: number
 }
