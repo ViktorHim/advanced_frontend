@@ -17,7 +17,7 @@ export function buildWebpackConfig(options: BuildOptions) : webpack.Configuratio
         },
         plugins: buildPlugins(options), //массив плагинов
         module: {
-          rules: buildLoaders(),
+          rules: buildLoaders(options),
         },
         resolve: buildResolves(),
         devtool: isDev ? 'inline-source-map' : undefined,
