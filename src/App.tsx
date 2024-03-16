@@ -6,6 +6,7 @@ import { Suspense, useContext, useState } from "react";
 
 import './styles/index.scss';
 import { useTheme } from "./theme/useTheme";
+import { classNames } from "./helpers/classNames/classNames";
 
 
 export enum Theme {
@@ -13,23 +14,22 @@ export enum Theme {
   DARK = 'dark'
 }
 
-
 const App = () => {
 
     const {theme, toggleTheme} = useTheme();
 
-  return (
-    <div className={`app ${theme}`}>
-        <button onClick={toggleTheme}>Сменить тему</button>
-        <Link to={"/"}>Домой</Link>
-        <Link to={"/about"}>О сайте</Link>
-        <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-                <Route path="/" element={<HomePageAsync/>}/>
-                <Route path="/about" element={<AboutPageAsync/>}/>
-            </Routes>
-        </Suspense>
-    </div>
+    return (
+        <div className={classNames('app', {}, [theme])}>
+            <button onClick={toggleTheme}>Сменить тему</button>
+            <Link to={"/"}>Домой</Link>
+            <Link to={"/about"}>О сайте</Link>
+            <Suspense fallback={<div>Loading...</div>}>
+                <Routes>
+                    <Route path="/" element={<HomePageAsync/>}/>
+                    <Route path="/about" element={<AboutPageAsync/>}/>
+                </Routes>
+            </Suspense>
+        </div>
   )
 }
 
